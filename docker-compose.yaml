@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  engine-trouble-postgres:
+    image: postgres:15.2-alpine
+    environment:
+      - TZ=Europe/Amsterdam
+      - PGTZ=Europe/Amsterdam
+      - POSTGRES_USER=engine-trouble
+      - POSTGRES_PASSWORD=engine-trouble
+    ports:
+      - "5432:5432"

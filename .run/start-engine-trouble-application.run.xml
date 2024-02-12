@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="start-engine-trouble-application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="local" />
+    <envs>
+      <env name="DB_PASSWORD" value="engine-trouble" />
+      <env name="DB_URL" value="jdbc:postgresql://localhost:5432/engine-trouble" />
+      <env name="DB_USER" value="engine-trouble" />
+    </envs>
+    <module name="engine-trouble" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="nl.topicus.enginetrouble.EngineTroubleApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

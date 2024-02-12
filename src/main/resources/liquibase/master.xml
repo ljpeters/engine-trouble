@@ -1,0 +1,54 @@
+<?xml version="1.0" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+  <changeSet id="Create car table" author="Luuk Peters">
+    <createTable tableName="car">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_car"/>
+      </column>
+      <column name="reference" type="VARCHAR(36)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_at" type="timestamp with time zone" defaultValueComputed="current_timestamp"/>
+    </createTable>
+
+    <addUniqueConstraint tableName="car" columnNames="reference" constraintName="uk_car_reference"/>
+  </changeSet>
+
+  <changeSet id="Create engine table" author="Luuk Peters">
+    <createTable tableName="engine">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_engine"/>
+      </column>
+      <column name="car" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_at" type="timestamp with time zone" defaultValueComputed="current_timestamp"/>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="engine" baseColumnNames="car"
+                             constraintName="fk_engine_car"
+                             referencedTableName="car" referencedColumnNames="id"/>
+  </changeSet>
+
+  <changeSet id="create piston table" author="Luuk Peters">
+    <createTable tableName="piston">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_piston"/>
+      </column>
+      <column name="engine" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="CLOB">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_at" type="timestamp with time zone" defaultValueComputed="current_timestamp"/>
+    </createTable>
+
+    <addForeignKeyConstraint baseTableName="piston" baseColumnNames="engine"
+                             constraintName="fk_piston_engine"
+                             referencedTableName="engine" referencedColumnNames="id"/>
+  </changeSet>
+
+</databaseChangeLog>

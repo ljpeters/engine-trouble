@@ -1,0 +1,50 @@
+ server:
+  shutdown: graceful
+spring:
+  profiles:
+    group:
+      local:
+        - "dev"
+        - "liquibase"
+      liquibase-only:
+        - "liquibase"
+
+  main:
+    banner-mode: off
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  liquibase:
+    enabled: false
+
+  jackson:
+    default-property-inclusion: NON_NULL
+
+---
+spring:
+  config:
+    activate:
+      on-profile: liquibase
+  liquibase:
+    enabled: true
+    change-log: "classpath:liquibase/master.xml"
+---
+spring:
+  config:
+    activate:
+      on-profile: liquibase-only
+  main:
+    web-application-type: NONE
+    lazy-initialization: true
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+    org.springframework.transaction.interceptor: TRACE

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+  <springProfile name="dev">
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  </springProfile>
+
+  <springProfile name="!dev">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+        <providers>
+          <timestamp/>
+          <logLevel/>
+          <message/>
+          <pattern>
+            <omitEmptyFields>true</omitEmptyFields>
+            <pattern>
+              {
+              "applicationName": "EngineTrouble",
+              "elapsed_ms_number": "#asLong{%mdc{elapsed_ms}}"
+              }
+            </pattern>
+          </pattern>
+          <mdc/>
+          <threadName/>
+          <loggerName/>
+          <stackTrace/>
+        </providers>
+      </encoder>
+    </appender>
+  </springProfile>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>
